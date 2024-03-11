@@ -125,4 +125,33 @@ const editAluno = (index) => {
   openModal();
 };
 
+// forma de pegar o click do button
+const editDelete = (event) => {
+  if (event.target.type == "button") {
+    const [action, index] = event.target.id.split("-");
 
+    if (action == "edit") {
+      editAluno(index);
+    } else {
+      const aluno = readAluno()[index];
+      const reponse = confirm(`Deseja realmente excluir o aluno ${aluno.nome}`);
+      if (reponse) {
+        deleteAluno(index);
+        upadteTable();
+      }
+    }
+  }
+};
+
+upadteTable();
+
+//Eventos
+document.getElementById("cadastrarAluno").addEventListener("click", openModal);
+
+document.getElementById("modalClose").addEventListener("click", closeModal);
+
+document.getElementById("salvar").addEventListener("click", salvarAluno);
+
+document
+  .querySelector("#tableAluno>tbody")
+  .addEventListener("click", editDelete);
